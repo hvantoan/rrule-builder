@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-
-import Stack from "@mui/material/Stack";
 import Radio from "@mui/material/Radio";
 import Typography from "@mui/material/Typography";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -12,7 +10,7 @@ import SelectPosition from "./Selects/SelectPosition";
 import SelectDayCalendar from "./Selects/SelectDayCalendar";
 import IntervalTextInput from "./IntervalTextInput";
 import translateLabel from "../../utils/translateLabel";
-import { Grid } from "@mui/material";
+import { Col, Row, Stack } from "react-bootstrap";
 
 interface RepeatMonthlyProps {
   value: AllRepeatDetails;
@@ -27,71 +25,73 @@ const RepeatMonthly = ({ value, onChange, translation }: RepeatMonthlyProps) => 
   const disabledOnBYMONTHDAY = onRadio === MonthBy.BYSETPOS;
 
   return (
-    <Stack direction="column" spacing={2} alignItems="flex-start" width="100%">
+    <Stack gap={2}>
       <IntervalTextInput translation={translation} value={value} onChange={onChange} unit="months" />
-      <RadioGroup
-        name="monthly"
-        value={onRadio}
-        onChange={(e) => setOnRadio(e.target.value as MonthBy)}
-        sx={{ width: "100%" }}
-      >
-        <Grid container rowGap={2}>
-          {/* ON DAY SECTION */}
-          <Grid container>
-            <Grid sm={12} md={4}>
-              <FormControlLabel
-                value={MonthBy.BYMONTHDAY}
-                control={<Radio />}
-                label={
-                  <Typography sx={{ color: disabledOnBYMONTHDAY ? "text.disabled" : "text.primary", paddingLeft: 2 }}>
-                    {translateLabel(translation, "repeat.on_day")}
-                  </Typography>
-                }
-                sx={{ width: "100%" }}
-              />
-            </Grid>
-            <Grid sm={12} md={8}>
-              <SelectDayCalendar
-                translation={translation}
-                value={value}
-                onChange={onChange}
-                maxDaysInMonth={maxDaysInMonth}
-                disabled={disabledOnBYMONTHDAY}
-              />
-            </Grid>
-          </Grid>
-          {/* ON THE SECTION */}
-          <Grid container>
-            <Grid sm={12} md={4}>
-              <FormControlLabel
-                value={MonthBy.BYSETPOS}
-                control={<Radio />}
-                label={
-                  <Typography sx={{ color: disabledOnBYSETPOS ? "text.disabled" : "text.primary", paddingLeft: 2 }}>
-                    {translateLabel(translation, "repeat.on_the")}
-                  </Typography>
-                }
-              />
-            </Grid>
-            <Grid sm={12} md={4}>
-              <SelectPosition
-                translation={translation}
-                value={value}
-                onChange={onChange}
-                disabled={disabledOnBYSETPOS}
-              />
-            </Grid>
-            <Grid sm={12} md={4} sx={{ paddingLeft: 2 }}>
-              <SelectDayWeek
-                translation={translation}
-                value={value}
-                onChange={onChange}
-                disabled={disabledOnBYSETPOS}
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-      </RadioGroup>
+      <Row sm={12} md={12}>
+        <RadioGroup
+          name="monthly"
+          value={onRadio}
+          onChange={(e) => setOnRadio(e.target.value as MonthBy)}
+          sx={{ width: "100%" }}
+        >
+          <Stack gap={2}>
+            {/* ON DAY SECTION */}
+            <Row>
+              <Col sm={12} md={2}>
+                <FormControlLabel
+                  value={MonthBy.BYMONTHDAY}
+                  control={<Radio />}
+                  label={
+                    <Typography sx={{ color: disabledOnBYMONTHDAY ? "text.disabled" : "text.primary" }}>
+                      {translateLabel(translation, "repeat.on_day")}
+                    </Typography>
+                  }
+                  sx={{ width: "100%" }}
+                />
+              </Col>
+              <Col sm={12} md={4} className="pe-0">
+                <SelectDayCalendar
+                  translation={translation}
+                  value={value}
+                  onChange={onChange}
+                  maxDaysInMonth={maxDaysInMonth}
+                  disabled={disabledOnBYMONTHDAY}
+                />
+              </Col>
+            </Row>
+            {/* ON THE SECTION */}
+            <Row>
+              <Col sm={12} md={2}>
+                <FormControlLabel
+                  value={MonthBy.BYSETPOS}
+                  control={<Radio />}
+                  label={
+                    <Typography sx={{ color: disabledOnBYSETPOS ? "text.disabled" : "text.primary" }}>
+                      {translateLabel(translation, "repeat.on_the")}
+                    </Typography>
+                  }
+                />
+              </Col>
+              <Col sm={12} md={4} className="pe-0">
+                <SelectPosition
+                  translation={translation}
+                  value={value}
+                  onChange={onChange}
+                  disabled={disabledOnBYSETPOS}
+                />
+              </Col>
+              <Col sm={12} md={4}>
+                <SelectDayWeek
+                  translation={translation}
+                  value={value}
+                  onChange={onChange}
+                  disabled={disabledOnBYSETPOS}
+                />
+              </Col>
+            </Row>
+          </Stack>
+        </RadioGroup>
+      </Row>
     </Stack>
   );
 };

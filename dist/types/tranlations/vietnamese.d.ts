@@ -73,6 +73,7 @@ declare const vietnamese: {
         selectPos: string;
         selectDay: string;
         selectDayOfWeek: string;
+        selectMonth: string;
         order: {
             "1": string;
             "2": string;

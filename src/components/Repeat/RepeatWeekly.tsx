@@ -2,10 +2,10 @@ import React from "react";
 
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
 import { AllRepeatDetails, Weekday } from "./Repeat.types";
 import IntervalTextInput from "./IntervalTextInput";
 import translateLabel from "../../utils/translateLabel";
+import { Stack } from "react-bootstrap";
 
 interface RepeatWeeklyProps {
   value: AllRepeatDetails;
@@ -14,10 +14,8 @@ interface RepeatWeeklyProps {
 }
 
 const RepeatWeekly = ({ value, onChange, translation }: RepeatWeeklyProps) => (
-  <Stack direction="column" spacing={2} alignItems="flex-start" className="pr-2">
-    <Stack direction="row" spacing={2} alignItems="center">
-      <IntervalTextInput translation={translation} value={value} onChange={onChange} unit="weeks" />
-    </Stack>
+  <Stack direction="vertical" gap={3}>
+    <IntervalTextInput translation={translation} value={value} onChange={onChange} unit="weeks" />
     <ButtonGroup variant="contained" fullWidth>
       {/* TODO - do this type/iteration better */}
       {Object.keys(Weekday).map((day) => {
