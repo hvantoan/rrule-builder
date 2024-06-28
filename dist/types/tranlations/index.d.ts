@@ -168,6 +168,7 @@ declare const _default: {
             selectPos: string;
             selectDay: string;
             selectDayOfWeek: string;
+            selectMonth: string;
             order: {
                 "1": string;
                 "2": string;

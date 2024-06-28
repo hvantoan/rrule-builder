@@ -1,10 +1,10 @@
 import React from "react";
-import Stack from "@mui/material/Stack";
 import { Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { AllRepeatDetails } from "./Repeat.types";
 import { baseRepeatDetails } from "../../store/builderStore";
 import translateLabel from "../../utils/translateLabel";
+import { Col, Row } from "react-bootstrap";
 
 type IntervalTextInputProps = {
   value: AllRepeatDetails;
@@ -14,18 +14,25 @@ type IntervalTextInputProps = {
 };
 
 const IntervalTextInput = ({ value, onChange, unit, translation }: IntervalTextInputProps) => (
-  <Stack direction="row" spacing={2} alignItems="center">
-    <Typography>{translateLabel(translation, "repeat.every")}</Typography>
-    <TextField
-      id="outlined-basic"
-      label=""
-      variant="outlined"
-      type="number"
-      value={value.interval}
-      onChange={(e) => onChange({ ...baseRepeatDetails, interval: parseInt(e.target.value, 10) })}
-    />
-    <Typography>{translateLabel(translation, `repeat.${unit}`)}</Typography>
-  </Stack>
+  <Row className="d-flex justify-center align-items-center">
+    <Col sm="2" md="2" className="text-right">
+      <Typography>{translateLabel(translation, "repeat.every")}</Typography>
+    </Col>
+    <Col sm="2" md="4" className="pe-0">
+      <TextField
+        fullWidth
+        id="outlined-basic"
+        label=""
+        variant="outlined"
+        type="number"
+        value={value.interval}
+        onChange={(e) => onChange({ ...baseRepeatDetails, interval: parseInt(e.target.value, 10) })}
+      />
+    </Col>
+    <Col>
+      <Typography>{translateLabel(translation, `repeat.${unit}`)}</Typography>
+    </Col>
+  </Row>
 );
 
 export default IntervalTextInput;

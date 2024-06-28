@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
 
-import Stack from "@mui/material/Stack";
 import Radio from "@mui/material/Radio";
 import Typography from "@mui/material/Typography";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -13,6 +12,8 @@ import SelectPosition from "./Selects/SelectPosition";
 import SelectDayCalendar from "./Selects/SelectDayCalendar";
 import IntervalTextInput from "./IntervalTextInput";
 import SelectMonth from "./Selects/SelectMonth";
+import { Col, Row, Stack } from "react-bootstrap";
+import translateLabel from "./../../utils/translateLabel";
 
 interface RepeatYearlyProps {
   value: AllRepeatDetails;
@@ -52,34 +53,77 @@ const RepeatYearly = ({ value, onChange, enableYearlyInterval, translation }: Re
   );
 
   return (
-    <Stack direction="column" spacing={2} alignItems="flex-start">
+    <Stack gap={2}>
       {enableYearlyInterval && (
         <IntervalTextInput translation={translation} value={value} onChange={onChange} unit="years" />
       )}
-      <RadioGroup name="Yearly" value={onRadio} onChange={handleRadioChange}>
-        <Stack direction="column" spacing={2} alignItems="flex-start">
-          <Stack direction="row" spacing={4} alignItems="center">
-            <Radio value={YearlyBy.BYMONTH} name="day" />
-            <Typography sx={{ color: disabledOnBYMONTH ? "text.disabled" : "text.primary" }}>On</Typography>
-            <SelectMonth value={value} onChange={onChange} disabled={disabledOnBYMONTH} />
-            <SelectDayCalendar
-              translation={translation}
-              maxDaysInMonth={maxDaysInMonth}
-              value={value}
-              onChange={onChange}
-              disabled={disabledOnBYMONTH}
-            />
+      <Row md={12}>
+        <RadioGroup name="Yearly" value={onRadio} onChange={handleRadioChange}>
+          <Stack gap={2}>
+            <Row>
+              <Col md="2">
+                <Stack direction="horizontal">
+                  <Radio value={YearlyBy.BYMONTH} name="day" />
+                  <Typography sx={{ color: disabledOnBYMONTH ? "text.disabled" : "text.primary" }}>
+                    {translateLabel(translation, "repeat.on")}
+                  </Typography>
+                </Stack>
+              </Col>
+              <Col>
+                <SelectMonth translation={translation} value={value} onChange={onChange} disabled={disabledOnBYMONTH} />
+              </Col>
+              <Col>
+                <SelectDayCalendar
+                  translation={translation}
+                  maxDaysInMonth={maxDaysInMonth}
+                  value={value}
+                  onChange={onChange}
+                  disabled={disabledOnBYMONTH}
+                />
+              </Col>
+            </Row>
+            <Row className="d-flex justify-center align-items-center">
+              <Col md="2">
+                <Stack direction="horizontal">
+                  <Radio value={YearlyBy.BYSETPOS} name="day" />
+                  <Typography sx={{ color: disabledOnBYSETPOS ? "text.disabled" : "text.primary" }}>
+                    {translateLabel(translation, "repeat.on_the")}
+                  </Typography>
+                </Stack>
+              </Col>
+              <Col md="3">
+                <SelectPosition
+                  translation={translation}
+                  value={value}
+                  onChange={onChange}
+                  disabled={disabledOnBYSETPOS}
+                />
+              </Col>
+              <Col md="3">
+                <SelectDayWeek
+                  translation={translation}
+                  value={value}
+                  onChange={onChange}
+                  disabled={disabledOnBYSETPOS}
+                />
+              </Col>
+              <Col>
+                <Typography sx={{ color: disabledOnBYSETPOS ? "text.disabled" : "text.primary" }}>
+                  {translateLabel(translation, "repeat.of")}
+                </Typography>
+              </Col>
+              <Col md="3">
+                <SelectMonth
+                  translation={translation}
+                  value={value}
+                  onChange={onChange}
+                  disabled={disabledOnBYSETPOS}
+                />
+              </Col>
+            </Row>
           </Stack>
-          <Stack direction="row" spacing={4} alignItems="center">
-            <Radio value={YearlyBy.BYSETPOS} name="day" />
-            <Typography sx={{ color: disabledOnBYSETPOS ? "text.disabled" : "text.primary" }}>On The</Typography>
-            <SelectPosition translation={translation} value={value} onChange={onChange} disabled={disabledOnBYSETPOS} />
-            <SelectDayWeek translation={translation} value={value} onChange={onChange} disabled={disabledOnBYSETPOS} />
-            <Typography sx={{ color: disabledOnBYSETPOS ? "text.disabled" : "text.primary" }}>of</Typography>
-            <SelectMonth value={value} onChange={onChange} disabled={disabledOnBYSETPOS} />
-          </Stack>
-        </Stack>
-      </RadioGroup>
+        </RadioGroup>
+      </Row>
     </Stack>
   );
 };

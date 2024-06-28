@@ -10,7 +10,7 @@ import useBuilderStore from "../../store/builderStore";
 import { EndType } from "./End.types";
 import translateLabel from "../../utils/translateLabel";
 import vietnamese from "../../tranlations/vietnamese";
-import Grid from "@mui/material/Unstable_Grid2";
+import { Col, Row } from "react-bootstrap";
 
 interface EndProps {
   translation: any;
@@ -19,8 +19,8 @@ interface EndProps {
 const End = ({ translation = vietnamese }: EndProps) => {
   const { startDate, endDetails, setEndDetails } = useBuilderStore();
   return (
-    <Grid container>
-      <Grid sm={6} md={4} sx={{ paddingRight: 2 }}>
+    <Row>
+      <Col xs={12} sm={12} md={6} className="px-0">
         <FormControl fullWidth>
           <InputLabel id="end-label">{translateLabel(translation, "end.label")}</InputLabel>
           <Select
@@ -36,8 +36,8 @@ const End = ({ translation = vietnamese }: EndProps) => {
             ))}
           </Select>
         </FormControl>
-      </Grid>
-      <Grid sm={6} md={4}>
+      </Col>
+      <Col sm={12} md={6} className="pe-0">
         {endDetails?.endingType === EndType.ON && (
           <DatePicker
             sx={{ width: "100%" }}
@@ -59,8 +59,8 @@ const End = ({ translation = vietnamese }: EndProps) => {
             />
           </FormControl>
         )}
-      </Grid>
-    </Grid>
+      </Col>
+    </Row>
   );
 };
 
