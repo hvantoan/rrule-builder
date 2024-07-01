@@ -20,9 +20,10 @@ interface RepeatYearlyProps {
   translation: any;
   onChange: (value: AllRepeatDetails) => void;
   enableYearlyInterval?: boolean;
+  dense: boolean;
 }
 
-const RepeatYearly = ({ value, onChange, enableYearlyInterval, translation }: RepeatYearlyProps) => {
+const RepeatYearly = ({ value, onChange, enableYearlyInterval, translation, dense }: RepeatYearlyProps) => {
   const maxDaysInMonth = useMemo(() => {
     if (value.byMonth) {
       return DateTime.fromObject({ month: value.byMonth[0] }).daysInMonth || 31;
@@ -55,7 +56,7 @@ const RepeatYearly = ({ value, onChange, enableYearlyInterval, translation }: Re
   return (
     <Stack gap={2}>
       {enableYearlyInterval && (
-        <IntervalTextInput translation={translation} value={value} onChange={onChange} unit="years" />
+        <IntervalTextInput dense={dense} translation={translation} value={value} onChange={onChange} unit="years" />
       )}
       <Row md={12}>
         <RadioGroup name="Yearly" value={onRadio} onChange={handleRadioChange}>
@@ -70,10 +71,17 @@ const RepeatYearly = ({ value, onChange, enableYearlyInterval, translation }: Re
                 </Stack>
               </Col>
               <Col>
-                <SelectMonth translation={translation} value={value} onChange={onChange} disabled={disabledOnBYMONTH} />
+                <SelectMonth
+                  dense={dense}
+                  translation={translation}
+                  value={value}
+                  onChange={onChange}
+                  disabled={disabledOnBYMONTH}
+                />
               </Col>
               <Col>
                 <SelectDayCalendar
+                  dense={dense}
                   translation={translation}
                   maxDaysInMonth={maxDaysInMonth}
                   value={value}
@@ -93,6 +101,7 @@ const RepeatYearly = ({ value, onChange, enableYearlyInterval, translation }: Re
               </Col>
               <Col md="3">
                 <SelectPosition
+                  dense={dense}
                   translation={translation}
                   value={value}
                   onChange={onChange}
@@ -101,6 +110,7 @@ const RepeatYearly = ({ value, onChange, enableYearlyInterval, translation }: Re
               </Col>
               <Col md="3">
                 <SelectDayWeek
+                  dense={dense}
                   translation={translation}
                   value={value}
                   onChange={onChange}
@@ -114,6 +124,7 @@ const RepeatYearly = ({ value, onChange, enableYearlyInterval, translation }: Re
               </Col>
               <Col md="3">
                 <SelectMonth
+                  dense={dense}
                   translation={translation}
                   value={value}
                   onChange={onChange}

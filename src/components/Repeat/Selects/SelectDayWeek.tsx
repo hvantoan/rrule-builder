@@ -12,15 +12,17 @@ interface SelectDayWeekProps {
   translation: any;
   onChange: (value: AllRepeatDetails) => void;
   disabled: boolean;
+  dense: boolean;
 }
 const sxMinWidth = { minWidth: 120 };
 
-const SelectDayWeek = ({ value, onChange, disabled, translation }: SelectDayWeekProps) => (
+const SelectDayWeek = ({ value, onChange, disabled, translation, dense }: SelectDayWeekProps) => (
   <FormControl fullWidth>
     <InputLabel id="select-day-label" disabled={disabled}>
       {translateLabel(translation, "repeat.selectDayOfWeek")}
     </InputLabel>
     <Select
+      size={dense ? "small" : "medium"}
       sx={sxMinWidth}
       disabled={disabled}
       onChange={(e) => {

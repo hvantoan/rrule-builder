@@ -6,6 +6,7 @@ interface SelectDayCalendarProps {
     onChange: (value: AllRepeatDetails) => void;
     maxDaysInMonth: number;
     disabled: boolean;
+    dense: boolean;
 }
-declare const SelectDayCalendar: ({ value, onChange, maxDaysInMonth, disabled, translation }: SelectDayCalendarProps) => React.JSX.Element;
+declare const SelectDayCalendar: ({ value, onChange, maxDaysInMonth, disabled, translation, dense, }: SelectDayCalendarProps) => React.JSX.Element;
 export default SelectDayCalendar;

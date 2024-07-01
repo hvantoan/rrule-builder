@@ -1,14 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import Stack$1 from '@mui/material/Stack';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
 import { DateTime } from 'luxon';
 import { Frequency, RRule } from 'rrule';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { Typography } from '@mui/material';
+import { Typography, styled } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { create } from 'zustand';
 import * as Yup from 'yup';
@@ -25,7 +24,6 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material/styles';
 
 /******************************************************************************
@@ -377,18 +375,18 @@ const translateLabel = (translations, key, replacements = {}) => {
     return null;
 };
 
-const IntervalTextInput = ({ value, onChange, unit, translation }) => (React.createElement(Row, { className: "d-flex justify-center align-items-center" },
+const IntervalTextInput = ({ value, onChange, unit, translation, dense }) => (React.createElement(Row, { className: "d-flex justify-center align-items-center" },
     React.createElement(Col, { sm: "2", md: "2", className: "text-left" },
         React.createElement(Typography, null, translateLabel(translation, "repeat.every"))),
     React.createElement(Col, { sm: "2", md: "4", className: "pe-0" },
-        React.createElement(TextField, { fullWidth: true, id: "outlined-basic", label: "", variant: "outlined", type: "number", value: value.interval, onChange: (e) => onChange(Object.assign(Object.assign({}, baseRepeatDetails), { interval: parseInt(e.target.value, 10) })) })),
+        React.createElement(TextField, { size: dense ? "small" : "medium", fullWidth: true, id: "outlined-basic", label: "", variant: "outlined", type: "number", value: value.interval, onChange: (e) => onChange(Object.assign(Object.assign({}, baseRepeatDetails), { interval: parseInt(e.target.value, 10) })) })),
     React.createElement(Col, null,
         React.createElement(Typography, null, translateLabel(translation, `repeat.${unit}`)))));
 
-const RepeatHourly = ({ value, onChange, translation }) => (React.createElement(IntervalTextInput, { translation: translation, value: value, onChange: onChange, unit: "hours" }));
+const RepeatHourly = ({ value, onChange, translation, dense }) => (React.createElement(IntervalTextInput, { dense: dense, translation: translation, value: value, onChange: onChange, unit: "hours" }));
 
-const RepeatWeekly = ({ value, onChange, translation }) => (React.createElement(Stack, { direction: "vertical", gap: 3 },
-    React.createElement(IntervalTextInput, { translation: translation, value: value, onChange: onChange, unit: "weeks" }),
+const RepeatWeekly = ({ value, onChange, translation, dense }) => (React.createElement(Stack, { direction: "vertical", gap: 3 },
+    React.createElement(IntervalTextInput, { dense: dense, translation: translation, value: value, onChange: onChange, unit: "weeks" }),
     React.createElement(ButtonGroup, { variant: "contained", fullWidth: true }, Object.keys(Weekday).map((day) => {
         var _a;
         const dayKey = day;
@@ -408,9 +406,9 @@ const RepeatWeekly = ({ value, onChange, translation }) => (React.createElement(
     }))));
 
 const sxMinWidth$3 = { minWidth: 120 };
-const SelectDayWeek = ({ value, onChange, disabled, translation }) => (React.createElement(FormControl, { fullWidth: true },
+const SelectDayWeek = ({ value, onChange, disabled, translation, dense }) => (React.createElement(FormControl, { fullWidth: true },
     React.createElement(InputLabel, { id: "select-day-label", disabled: disabled }, translateLabel(translation, "repeat.selectDayOfWeek")),
-    React.createElement(Select, { sx: sxMinWidth$3, disabled: disabled, onChange: (e) => {
+    React.createElement(Select, { size: dense ? "small" : "medium", sx: sxMinWidth$3, disabled: disabled, onChange: (e) => {
             let setVal = [e.target.value];
             if (e.target.value === AllWeekDayOptions.DAY) {
                 // this means all days in the array
@@ -429,25 +427,25 @@ const SelectDayWeek = ({ value, onChange, disabled, translation }) => (React.cre
 
 const sxMinWidth$2 = { minWidth: 150 };
 // TODO should there be a max number of positions? Change to AutoComplete from Select?
-const SelectPosition = ({ value, onChange, disabled, translation }) => (React.createElement(FormControl, { fullWidth: true },
+const SelectPosition = ({ value, onChange, disabled, translation, dense }) => (React.createElement(FormControl, { fullWidth: true },
     React.createElement(InputLabel, { id: "select-month-label", disabled: disabled, shrink: !disabled }, translateLabel(translation, "repeat.selectPos")),
-    React.createElement(Select, { sx: sxMinWidth$2, disabled: disabled, onChange: (e) => {
+    React.createElement(Select, { sx: sxMinWidth$2, size: dense ? "small" : "medium", disabled: disabled, onChange: (e) => {
             const currentVal = e.target.value;
             onChange(Object.assign(Object.assign({}, value), { bySetPos: currentVal }));
         }, value: value.bySetPos, multiple: true, labelId: "select-pos-label", label: translateLabel("translation", "repeat.selectPos") }, Object.keys(OnThe).map((key) => (React.createElement(MenuItem, { key: key, value: parseInt(OnThe[key], 10) }, translateLabel(translation, "repeat.order." + OnThe[key])))))));
 
 const sxMinWidth$1 = { minWidth: 120 };
-const SelectDayCalendar = ({ value, onChange, maxDaysInMonth, disabled, translation }) => (React.createElement(FormControl, { fullWidth: true },
+const SelectDayCalendar = ({ value, onChange, maxDaysInMonth, disabled, translation, dense, }) => (React.createElement(FormControl, { fullWidth: true },
     React.createElement(InputLabel, { id: "select-day-cal-label", disabled: disabled }, translateLabel(translation, "repeat.selectDay")),
-    React.createElement(Select, { sx: sxMinWidth$1, disabled: disabled, onChange: (e) => onChange(Object.assign(Object.assign({}, value), { byMonthDay: [parseInt(e.target.value, 10)] })), value: value.byMonthDay, labelId: "select-day-cal-label", label: translateLabel(translation, "repeat.selectDay") }, Array.from({ length: maxDaysInMonth }, (_, i) => i + 1).map((day) => (React.createElement(MenuItem, { key: day, value: day }, day))))));
+    React.createElement(Select, { size: dense ? "small" : "medium", sx: sxMinWidth$1, disabled: disabled, onChange: (e) => onChange(Object.assign(Object.assign({}, value), { byMonthDay: [parseInt(e.target.value, 10)] })), value: value.byMonthDay, labelId: "select-day-cal-label", label: translateLabel(translation, "repeat.selectDay") }, Array.from({ length: maxDaysInMonth }, (_, i) => i + 1).map((day) => (React.createElement(MenuItem, { key: day, value: day }, day))))));
 
-const RepeatMonthly = ({ value, onChange, translation }) => {
+const RepeatMonthly = ({ value, onChange, translation, dense }) => {
     const maxDaysInMonth = 31;
     const [onRadio, setOnRadio] = useState(MonthBy.BYMONTHDAY);
     const disabledOnBYSETPOS = onRadio === MonthBy.BYMONTHDAY;
     const disabledOnBYMONTHDAY = onRadio === MonthBy.BYSETPOS;
     return (React.createElement(Stack, { gap: 2 },
-        React.createElement(IntervalTextInput, { translation: translation, value: value, onChange: onChange, unit: "months" }),
+        React.createElement(IntervalTextInput, { dense: dense, translation: translation, value: value, onChange: onChange, unit: "months" }),
         React.createElement(Row, { sm: 12, md: 12 },
             React.createElement(RadioGroup, { name: "monthly", value: onRadio, onChange: (e) => setOnRadio(e.target.value), sx: { width: "100%" } },
                 React.createElement(Stack, { gap: 2 },
@@ -455,17 +453,17 @@ const RepeatMonthly = ({ value, onChange, translation }) => {
                         React.createElement(Col, { sm: 12, md: 2 },
                             React.createElement(FormControlLabel, { value: MonthBy.BYMONTHDAY, control: React.createElement(Radio, null), label: React.createElement(Typography$1, { sx: { color: disabledOnBYMONTHDAY ? "text.disabled" : "text.primary" } }, translateLabel(translation, "repeat.on_day")), sx: { width: "100%" } })),
                         React.createElement(Col, { sm: 12, md: 4, className: "pe-0" },
-                            React.createElement(SelectDayCalendar, { translation: translation, value: value, onChange: onChange, maxDaysInMonth: maxDaysInMonth, disabled: disabledOnBYMONTHDAY }))),
+                            React.createElement(SelectDayCalendar, { dense: dense, translation: translation, value: value, onChange: onChange, maxDaysInMonth: maxDaysInMonth, disabled: disabledOnBYMONTHDAY }))),
                     React.createElement(Row, null,
                         React.createElement(Col, { sm: 12, md: 2 },
                             React.createElement(FormControlLabel, { value: MonthBy.BYSETPOS, control: React.createElement(Radio, null), label: React.createElement(Typography$1, { sx: { color: disabledOnBYSETPOS ? "text.disabled" : "text.primary" } }, translateLabel(translation, "repeat.on_the")) })),
                         React.createElement(Col, { sm: 12, md: 4, className: "pe-0" },
-                            React.createElement(SelectPosition, { translation: translation, value: value, onChange: onChange, disabled: disabledOnBYSETPOS })),
+                            React.createElement(SelectPosition, { dense: dense, translation: translation, value: value, onChange: onChange, disabled: disabledOnBYSETPOS })),
                         React.createElement(Col, { sm: 12, md: 4 },
-                            React.createElement(SelectDayWeek, { translation: translation, value: value, onChange: onChange, disabled: disabledOnBYSETPOS }))))))));
+                            React.createElement(SelectDayWeek, { dense: dense, translation: translation, value: value, onChange: onChange, disabled: disabledOnBYSETPOS }))))))));
 };
 
-const RepeatDaily = ({ value, onChange, translation }) => (React.createElement(IntervalTextInput, { translation: translation, value: value, onChange: onChange, unit: "days" }));
+const RepeatDaily = ({ value, onChange, translation, dense }) => (React.createElement(IntervalTextInput, { dense: dense, translation: translation, value: value, onChange: onChange, unit: "days" }));
 
 // TODO does RRULE have a built-in mapping for this?
 ({
@@ -526,15 +524,15 @@ const monthShortTextMapping = {
 };
 
 const sxMinWidth = { minWidth: 120 };
-const SelectMonth = ({ value, onChange, disabled, translation }) => {
+const SelectMonth = ({ value, onChange, disabled, translation, dense }) => {
     var _a, _b;
     const displayValue = disabled ? null : (_b = (_a = value === null || value === void 0 ? void 0 : value.byMonth) === null || _a === void 0 ? void 0 : _a[0]) !== null && _b !== void 0 ? _b : null;
     return (React.createElement(FormControl, { fullWidth: true },
         React.createElement(InputLabel, { id: "select-month-label", disabled: disabled, shrink: !disabled && !!displayValue }, translateLabel(translation, "repeat.selectMonth")),
-        React.createElement(Select, { sx: sxMinWidth, disabled: disabled, onChange: (e) => onChange(Object.assign(Object.assign({}, value), { byMonth: [parseInt(e.target.value, 10)] })), value: displayValue, labelId: "select-month-label", label: !disabled && !!displayValue ? translateLabel(translation, "repeat.selectMonth") : undefined }, Object.values(Months).map((key) => (React.createElement(MenuItem, { key: key, value: key }, translateLabel(translation, "months." + monthShortTextMapping[key].toLocaleLowerCase())))))));
+        React.createElement(Select, { sx: sxMinWidth, size: dense ? "small" : "medium", disabled: disabled, onChange: (e) => onChange(Object.assign(Object.assign({}, value), { byMonth: [parseInt(e.target.value, 10)] })), value: displayValue, labelId: "select-month-label", label: !disabled && !!displayValue ? translateLabel(translation, "repeat.selectMonth") : undefined }, Object.values(Months).map((key) => (React.createElement(MenuItem, { key: key, value: key }, translateLabel(translation, "months." + monthShortTextMapping[key].toLocaleLowerCase())))))));
 };
 
-const RepeatYearly = ({ value, onChange, enableYearlyInterval, translation }) => {
+const RepeatYearly = ({ value, onChange, enableYearlyInterval, translation, dense }) => {
     const maxDaysInMonth = useMemo(() => {
         if (value.byMonth) {
             return DateTime.fromObject({ month: value.byMonth[0] }).daysInMonth || 31;
@@ -555,7 +553,7 @@ const RepeatYearly = ({ value, onChange, enableYearlyInterval, translation }) =>
         setOnRadio(radioVal);
     }, [onChange, value]);
     return (React.createElement(Stack, { gap: 2 },
-        enableYearlyInterval && (React.createElement(IntervalTextInput, { translation: translation, value: value, onChange: onChange, unit: "years" })),
+        enableYearlyInterval && (React.createElement(IntervalTextInput, { dense: dense, translation: translation, value: value, onChange: onChange, unit: "years" })),
         React.createElement(Row, { md: 12 },
             React.createElement(RadioGroup, { name: "Yearly", value: onRadio, onChange: handleRadioChange },
                 React.createElement(Stack, { gap: 2 },
@@ -565,22 +563,22 @@ const RepeatYearly = ({ value, onChange, enableYearlyInterval, translation }) =>
                                 React.createElement(Radio, { value: YearlyBy.BYMONTH, name: "day" }),
                                 React.createElement(Typography$1, { sx: { color: disabledOnBYMONTH ? "text.disabled" : "text.primary" } }, translateLabel(translation, "repeat.on")))),
                         React.createElement(Col, null,
-                            React.createElement(SelectMonth, { translation: translation, value: value, onChange: onChange, disabled: disabledOnBYMONTH })),
+                            React.createElement(SelectMonth, { dense: dense, translation: translation, value: value, onChange: onChange, disabled: disabledOnBYMONTH })),
                         React.createElement(Col, null,
-                            React.createElement(SelectDayCalendar, { translation: translation, maxDaysInMonth: maxDaysInMonth, value: value, onChange: onChange, disabled: disabledOnBYMONTH }))),
+                            React.createElement(SelectDayCalendar, { dense: dense, translation: translation, maxDaysInMonth: maxDaysInMonth, value: value, onChange: onChange, disabled: disabledOnBYMONTH }))),
                     React.createElement(Row, { className: "d-flex justify-center align-items-center" },
                         React.createElement(Col, { md: "2" },
                             React.createElement(Stack, { direction: "horizontal" },
                                 React.createElement(Radio, { value: YearlyBy.BYSETPOS, name: "day" }),
                                 React.createElement(Typography$1, { sx: { color: disabledOnBYSETPOS ? "text.disabled" : "text.primary" } }, translateLabel(translation, "repeat.on_the")))),
                         React.createElement(Col, { md: "3" },
-                            React.createElement(SelectPosition, { translation: translation, value: value, onChange: onChange, disabled: disabledOnBYSETPOS })),
+                            React.createElement(SelectPosition, { dense: dense, translation: translation, value: value, onChange: onChange, disabled: disabledOnBYSETPOS })),
                         React.createElement(Col, { md: "3" },
-                            React.createElement(SelectDayWeek, { translation: translation, value: value, onChange: onChange, disabled: disabledOnBYSETPOS })),
+                            React.createElement(SelectDayWeek, { dense: dense, translation: translation, value: value, onChange: onChange, disabled: disabledOnBYSETPOS })),
                         React.createElement(Col, null,
                             React.createElement(Typography$1, { sx: { color: disabledOnBYSETPOS ? "text.disabled" : "text.primary" } }, translateLabel(translation, "repeat.of"))),
                         React.createElement(Col, { md: "3" },
-                            React.createElement(SelectMonth, { translation: translation, value: value, onChange: onChange, disabled: disabledOnBYSETPOS }))))))));
+                            React.createElement(SelectMonth, { dense: dense, translation: translation, value: value, onChange: onChange, disabled: disabledOnBYSETPOS }))))))));
 };
 
 const defaultFrequencyOptions = [
@@ -590,7 +588,7 @@ const defaultFrequencyOptions = [
     Frequency.MONTHLY,
     Frequency.YEARLY,
 ];
-const RepeatSelect = ({ rruleFrequencyOptions = defaultFrequencyOptions, frequencySelected, onFrequencyChange, enableYearlyInterval, translation, }) => {
+const RepeatSelect = ({ rruleFrequencyOptions = defaultFrequencyOptions, frequencySelected, onFrequencyChange, enableYearlyInterval, translation, dense, }) => {
     const { setRepeatDetails, repeatDetails } = useBuilderStore();
     const translateSelect = (fre) => {
         switch (fre) {
@@ -617,22 +615,22 @@ const RepeatSelect = ({ rruleFrequencyOptions = defaultFrequencyOptions, frequen
         // type narrow the repeatDetails
         switch (frequencySelected) {
             case Frequency.HOURLY:
-                return React.createElement(RepeatHourly, { translation: translation, value: repeatDetails, onChange: setRepeatDetails });
+                return (React.createElement(RepeatHourly, { dense: dense, translation: translation, value: repeatDetails, onChange: setRepeatDetails }));
             case Frequency.DAILY:
-                return React.createElement(RepeatDaily, { translation: translation, value: repeatDetails, onChange: setRepeatDetails });
+                return (React.createElement(RepeatDaily, { dense: dense, translation: translation, value: repeatDetails, onChange: setRepeatDetails }));
             case Frequency.WEEKLY:
-                return React.createElement(RepeatWeekly, { translation: translation, value: repeatDetails, onChange: setRepeatDetails });
+                return (React.createElement(RepeatWeekly, { dense: dense, translation: translation, value: repeatDetails, onChange: setRepeatDetails }));
             case Frequency.MONTHLY:
-                return React.createElement(RepeatMonthly, { translation: translation, value: repeatDetails, onChange: setRepeatDetails });
+                return (React.createElement(RepeatMonthly, { dense: dense, translation: translation, value: repeatDetails, onChange: setRepeatDetails }));
             case Frequency.YEARLY:
-                return (React.createElement(RepeatYearly, { translation: translation, value: repeatDetails, onChange: setRepeatDetails, enableYearlyInterval: enableYearlyInterval }));
+                return (React.createElement(RepeatYearly, { dense: dense, translation: translation, value: repeatDetails, onChange: setRepeatDetails, enableYearlyInterval: enableYearlyInterval }));
             default:
                 return null;
         }
     }, [enableYearlyInterval, frequencySelected, repeatDetails, setRepeatDetails]);
     return (React.createElement(Card, { className: "p-3" },
         React.createElement(Stack$1, { direction: "column", spacing: 2 },
-            React.createElement(Select, { variant: "outlined", value: frequencySelected, onChange: (e) => onFrequencyChange(e.target.value), fullWidth: true }, menuItems),
+            React.createElement(Select, { size: dense ? "small" : "medium", variant: "outlined", value: frequencySelected, onChange: (e) => onFrequencyChange(e.target.value), fullWidth: true }, menuItems),
             repeatComponentToRender)));
 };
 
@@ -731,68 +729,36 @@ const vietnamese = {
     }
 };
 
-const End = ({ translation = vietnamese }) => {
+const DatePic = styled(DatePicker)(({}) => ({
+    ".MuiOutlinedInput-input": {
+        padding: "8px",
+        backgroundColor: "white",
+    },
+}));
+
+const End = ({ translation = vietnamese, dense }) => {
     var _a;
     const { startDate, endDetails, setEndDetails } = useBuilderStore();
     return (React.createElement(Row, { className: "col-12 px-0" },
         React.createElement(Col, { xs: 12, sm: 12, md: 6, className: "px-0" },
             React.createElement(FormControl, { fullWidth: true },
                 React.createElement(InputLabel, { id: "end-label" }, translateLabel(translation, "end.label")),
-                React.createElement(Select, { value: endDetails === null || endDetails === void 0 ? void 0 : endDetails.endingType, onChange: (e) => setEndDetails(Object.assign(Object.assign({}, endDetails), { endingType: e.target.value })), labelId: "end-label", label: "End" }, Object.entries(EndType).map(([key, value]) => (React.createElement(MenuItem, { key: key, value: value },
+                React.createElement(Select, { size: dense ? "small" : "medium", value: endDetails === null || endDetails === void 0 ? void 0 : endDetails.endingType, onChange: (e) => setEndDetails(Object.assign(Object.assign({}, endDetails), { endingType: e.target.value })), labelId: "end-label", label: "End" }, Object.entries(EndType).map(([key, value]) => (React.createElement(MenuItem, { key: key, value: value },
                     React.createElement(Typography, null, translateLabel(translation, "end." + value)))))))),
         React.createElement(Col, { sm: 12, md: 6, className: "pe-0" },
-            (endDetails === null || endDetails === void 0 ? void 0 : endDetails.endingType) === EndType.ON && (React.createElement(DatePicker, { sx: { width: "100%" }, label: translateLabel(translation, "end.label"), value: endDetails === null || endDetails === void 0 ? void 0 : endDetails.endDate, 
+            (endDetails === null || endDetails === void 0 ? void 0 : endDetails.endingType) === EndType.ON && (React.createElement(DatePic, { sx: { width: "100%" }, formatDensity: "dense", label: translateLabel(translation, "end.label"), value: endDetails === null || endDetails === void 0 ? void 0 : endDetails.endDate, 
                 // earliest possible end date is the start date
                 minDate: startDate !== null && startDate !== void 0 ? startDate : undefined, disabled: !startDate, onChange: (newDate) => setEndDetails(Object.assign(Object.assign({}, endDetails), { endDate: newDate })) })),
             (endDetails === null || endDetails === void 0 ? void 0 : endDetails.endingType) === EndType.AFTER && (React.createElement(FormControl, { fullWidth: true },
-                React.createElement(TextField, { label: translateLabel(translation, "end.occurrences"), type: "number", value: (_a = endDetails.occurrences) !== null && _a !== void 0 ? _a : "", onChange: (e) => setEndDetails(Object.assign(Object.assign({}, endDetails), { occurrences: parseInt(e.target.value, 10) })) }))))));
+                React.createElement(TextField, { type: "number", size: dense ? "small" : "medium", value: (_a = endDetails.occurrences) !== null && _a !== void 0 ? _a : "", label: translateLabel(translation, "end.occurrences"), onChange: (e) => setEndDetails(Object.assign(Object.assign({}, endDetails), { occurrences: parseInt(e.target.value, 10) })) }))))));
 };
-
-const defaultTheme = createTheme({
-    palette: {
-        primary: {
-            main: "#2781db",
-        },
-    },
-    components: {
-        MuiInputBase: {
-            styleOverrides: {
-                root: {
-                    padding: "4px", // Adjust padding as needed
-                    backgroundColor: "white",
-                },
-            },
-        },
-        MuiOutlinedInput: {
-            styleOverrides: {
-                input: {
-                    padding: "4px", // Adjust padding as needed
-                },
-            },
-        },
-        MuiInputLabel: {
-            styleOverrides: {
-                root: {
-                    "&.Mui-focused": {
-                        transform: "translate(10px, -10px) scale(1)", // Custom transform when label is focused or shrunk
-                    },
-                    "&.MuiInputLabel-shrink": {
-                        transform: "translate(10px, -10px) scale(1)", // Custom transform when label has filled value
-                    },
-                    transform: "translate(10px, 10px) scale(1);",
-                },
-            },
-        },
-    },
-});
 
 const RRuleBuilder = ({ datePickerInitialDate, onChange, rruleOptions, rruleString, 
 // TODO implement small screen detection
 // enableSmallScreenDetection = true,
 // smallScreenBreakpoint = 350,
 // TODO implement dense mode - make all things smaller with less padding
-// dense = false,
-enableYearlyInterval = false, hideStart = false, hideEnd = false, theme, translation = vietnamese, }) => {
+dense = true, enableYearlyInterval = false, hideStart = false, hideEnd = false, translation = vietnamese, }) => {
     const { 
     // TODO Implement validation errors on date picker
     // validationErrors,
@@ -849,13 +815,12 @@ enableYearlyInterval = false, hideStart = false, hideEnd = false, theme, transla
         // this is intentional to only run on mount
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    return (React.createElement(ThemeProvider, { theme: theme || defaultTheme },
-        React.createElement(Card, { className: "p-3" },
-            React.createElement(Stack$1, { direction: "column", spacing: 2 },
-                React.createElement(LocalizationProvider, { dateAdapter: AdapterLuxon },
-                    !hideStart && (React.createElement(DatePicker, { label: translateLabel(translation, "start.label"), value: startDate, format: "dd/MM/yyyy HH:mm", onChange: (newDate) => setStartDate(newDate) })),
-                    React.createElement(RepeatSelect, { translation: translation, frequencySelected: frequency, onFrequencyChange: setFrequency, enableYearlyInterval: enableYearlyInterval }),
-                    !hideEnd && React.createElement(End, { translation: translation }))))));
+    return (React.createElement(Card, { className: "p-3" },
+        React.createElement(Stack$1, { direction: "column", spacing: 2 },
+            React.createElement(LocalizationProvider, { dateAdapter: AdapterLuxon },
+                !hideStart && (React.createElement(DatePic, { label: translateLabel(translation, "start.label"), value: startDate, format: "dd/MM/yyyy HH:mm", onChange: (newDate) => setStartDate(newDate) })),
+                React.createElement(RepeatSelect, { dense: dense, translation: translation, frequencySelected: frequency, onFrequencyChange: setFrequency, enableYearlyInterval: enableYearlyInterval }),
+                !hideEnd && React.createElement(End, { dense: dense, translation: translation })))));
 };
 
 const english = {
@@ -958,5 +923,24 @@ var index = {
     english,
     vietnamese
 };
+
+const defaultTheme = createTheme({
+    palette: {
+        primary: {
+            main: "#2781db",
+        },
+    },
+    components: {
+        MuiInputBase: {
+            styleOverrides: {
+                root: {
+                    padding: "4px", // Adjust padding as needed
+                    backgroundColor: "white",
+                },
+            },
+        },
+        MuiDatePicker: {},
+    },
+});
 
 export { RRuleBuilder, defaultTheme, index as tranlations, useBuilderStore };

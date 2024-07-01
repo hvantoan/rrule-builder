@@ -9,13 +9,14 @@ import { Stack } from "react-bootstrap";
 
 interface RepeatWeeklyProps {
   value: AllRepeatDetails;
+  dense: boolean;
   translation: any;
   onChange: (value: AllRepeatDetails) => void;
 }
 
-const RepeatWeekly = ({ value, onChange, translation }: RepeatWeeklyProps) => (
+const RepeatWeekly = ({ value, onChange, translation, dense }: RepeatWeeklyProps) => (
   <Stack direction="vertical" gap={3}>
-    <IntervalTextInput translation={translation} value={value} onChange={onChange} unit="weeks" />
+    <IntervalTextInput dense={dense} translation={translation} value={value} onChange={onChange} unit="weeks" />
     <ButtonGroup variant="contained" fullWidth>
       {/* TODO - do this type/iteration better */}
       {Object.keys(Weekday).map((day) => {

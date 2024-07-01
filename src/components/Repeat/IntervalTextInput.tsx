@@ -9,17 +9,19 @@ import { Col, Row } from "react-bootstrap";
 type IntervalTextInputProps = {
   value: AllRepeatDetails;
   translation: any;
+  dense: boolean;
   onChange: (value: AllRepeatDetails) => void;
   unit: string;
 };
 
-const IntervalTextInput = ({ value, onChange, unit, translation }: IntervalTextInputProps) => (
+const IntervalTextInput = ({ value, onChange, unit, translation, dense }: IntervalTextInputProps) => (
   <Row className="d-flex justify-center align-items-center">
     <Col sm="2" md="2" className="text-left">
       <Typography>{translateLabel(translation, "repeat.every")}</Typography>
     </Col>
     <Col sm="2" md="4" className="pe-0">
       <TextField
+        size={dense ? "small" : "medium"}
         fullWidth
         id="outlined-basic"
         label=""

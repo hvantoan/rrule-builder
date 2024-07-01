@@ -5,6 +5,7 @@ interface SelectMonthProps {
     translation: any;
     onChange: (value: AllRepeatDetails) => void;
     disabled: boolean;
+    dense: boolean;
 }
-declare const SelectMonth: ({ value, onChange, disabled, translation }: SelectMonthProps) => React.JSX.Element;
+declare const SelectMonth: ({ value, onChange, disabled, translation, dense }: SelectMonthProps) => React.JSX.Element;
 export default SelectMonth;

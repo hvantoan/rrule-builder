@@ -5,6 +5,7 @@ interface SelectPositionProps {
     translation: any;
     onChange: (value: AllRepeatDetails) => void;
     disabled: boolean;
+    dense: boolean;
 }
-declare const SelectPosition: ({ value, onChange, disabled, translation }: SelectPositionProps) => React.JSX.Element;
+declare const SelectPosition: ({ value, onChange, disabled, translation, dense }: SelectPositionProps) => React.JSX.Element;
 export default SelectPosition;

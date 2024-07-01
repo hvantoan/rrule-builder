@@ -18,6 +18,7 @@ interface RepeatSelectProps {
   frequencySelected: Frequency;
   enableYearlyInterval: boolean;
   translation: any;
+  dense: boolean;
 }
 
 const defaultFrequencyOptions: Frequency[] = [
@@ -34,6 +35,7 @@ const RepeatSelect = ({
   onFrequencyChange,
   enableYearlyInterval,
   translation,
+  dense,
 }: RepeatSelectProps) => {
   const { setRepeatDetails, repeatDetails } = useBuilderStore();
 
@@ -69,16 +71,25 @@ const RepeatSelect = ({
 
     switch (frequencySelected) {
       case Frequency.HOURLY:
-        return <RepeatHourly translation={translation} value={repeatDetails} onChange={setRepeatDetails} />;
+        return (
+          <RepeatHourly dense={dense} translation={translation} value={repeatDetails} onChange={setRepeatDetails} />
+        );
       case Frequency.DAILY:
-        return <RepeatDaily translation={translation} value={repeatDetails} onChange={setRepeatDetails} />;
+        return (
+          <RepeatDaily dense={dense} translation={translation} value={repeatDetails} onChange={setRepeatDetails} />
+        );
       case Frequency.WEEKLY:
-        return <RepeatWeekly translation={translation} value={repeatDetails} onChange={setRepeatDetails} />;
+        return (
+          <RepeatWeekly dense={dense} translation={translation} value={repeatDetails} onChange={setRepeatDetails} />
+        );
       case Frequency.MONTHLY:
-        return <RepeatMonthly translation={translation} value={repeatDetails} onChange={setRepeatDetails} />;
+        return (
+          <RepeatMonthly dense={dense} translation={translation} value={repeatDetails} onChange={setRepeatDetails} />
+        );
       case Frequency.YEARLY:
         return (
           <RepeatYearly
+            dense={dense}
             translation={translation}
             value={repeatDetails}
             onChange={setRepeatDetails}
@@ -94,6 +105,7 @@ const RepeatSelect = ({
     <Card className="p-3">
       <Stack direction="column" spacing={2}>
         <Select
+          size={dense ? "small" : "medium"}
           variant={"outlined"}
           value={frequencySelected}
           onChange={(e) => onFrequencyChange(e.target.value as Frequency)}

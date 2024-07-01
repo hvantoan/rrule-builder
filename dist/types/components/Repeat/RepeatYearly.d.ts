@@ -5,6 +5,7 @@ interface RepeatYearlyProps {
     translation: any;
     onChange: (value: AllRepeatDetails) => void;
     enableYearlyInterval?: boolean;
+    dense: boolean;
 }
-declare const RepeatYearly: ({ value, onChange, enableYearlyInterval, translation }: RepeatYearlyProps) => React.JSX.Element;
+declare const RepeatYearly: ({ value, onChange, enableYearlyInterval, translation, dense }: RepeatYearlyProps) => React.JSX.Element;
 export default RepeatYearly;

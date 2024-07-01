@@ -1,4 +1,4 @@
-# React RRule Generator
+# React RRule Builder
 
 > Recurrence rules generator form built with React
 
@@ -25,7 +25,7 @@ It also uses:
 
 ## Installation
 
-`npm install --save react-rrule-generator`
+`npm install --save rrule-builder@latest`
 
 ## Usage
 

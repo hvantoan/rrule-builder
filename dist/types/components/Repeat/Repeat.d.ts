@@ -6,6 +6,7 @@ interface RepeatSelectProps {
     frequencySelected: Frequency;
     enableYearlyInterval: boolean;
     translation: any;
+    dense: boolean;
 }
-declare const RepeatSelect: ({ rruleFrequencyOptions, frequencySelected, onFrequencyChange, enableYearlyInterval, translation, }: RepeatSelectProps) => React.JSX.Element;
+declare const RepeatSelect: ({ rruleFrequencyOptions, frequencySelected, onFrequencyChange, enableYearlyInterval, translation, dense, }: RepeatSelectProps) => React.JSX.Element;
 export default RepeatSelect;

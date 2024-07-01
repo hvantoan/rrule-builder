@@ -1,7 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect } from "react";
 import Stack from "@mui/material/Stack";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
 import { DateTime } from "luxon";
@@ -10,11 +9,10 @@ import RepeatSelect from "../Repeat/Repeat";
 import useBuilderStore from "../../store/builderStore";
 import End from "../End/End";
 import { Theme } from "@mui/material";
-import { ThemeProvider } from "@emotion/react";
-import defaultTheme from "../../theme/theme";
 import vietnamese from "../../tranlations/vietnamese";
 import translateLabel from "../../utils/translateLabel";
 import { Card } from "react-bootstrap";
+import DatePic from "../DatePicker";
 
 interface RRuleBuilderProps {
   datePickerInitialDate?: DateTime;
@@ -41,11 +39,10 @@ const RRuleBuilder = ({
   // enableSmallScreenDetection = true,
   // smallScreenBreakpoint = 350,
   // TODO implement dense mode - make all things smaller with less padding
-  // dense = false,
+  dense = true,
   enableYearlyInterval = false,
   hideStart = false,
   hideEnd = false,
-  theme,
   translation = vietnamese,
 }: RRuleBuilderProps) => {
   const {
@@ -117,29 +114,29 @@ const RRuleBuilder = ({
   }, []);
 
   return (
-    <ThemeProvider theme={theme || defaultTheme}>
-      <Card className="p-3">
-        <Stack direction="column" spacing={2}>
-          <LocalizationProvider dateAdapter={AdapterLuxon}>
-            {!hideStart && (
-              <DatePicker
-                label={translateLabel(translation, "start.label")}
-                value={startDate}
-                format="dd/MM/yyyy HH:mm"
-                onChange={(newDate) => setStartDate(newDate)}
-              />
-            )}
-            <RepeatSelect
-              translation={translation}
-              frequencySelected={frequency}
-              onFrequencyChange={setFrequency}
-              enableYearlyInterval={enableYearlyInterval}
+    <Card className="p-3">
+      <Stack direction="column" spacing={2}>
+        <LocalizationProvider dateAdapter={AdapterLuxon}>
+          {!hideStart && (
+            <DatePic
+              label={translateLabel(translation, "start.label")}
+              value={startDate}
+              format="dd/MM/yyyy HH:mm"
+              onChange={(newDate) => setStartDate(newDate)}
             />
-            {!hideEnd && <End translation={translation} />}
-          </LocalizationProvider>
-        </Stack>
-      </Card>
-    </ThemeProvider>
+          )}
+
+          <RepeatSelect
+            dense={dense}
+            translation={translation}
+            frequencySelected={frequency}
+            onFrequencyChange={setFrequency}
+            enableYearlyInterval={enableYearlyInterval}
+          />
+          {!hideEnd && <End dense={dense} translation={translation} />}
+        </LocalizationProvider>
+      </Stack>
+    </Card>
   );
 };
 

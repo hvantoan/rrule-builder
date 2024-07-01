@@ -15,5 +15,5 @@ interface RRuleBuilderProps {
     hideEnd?: boolean;
     translation?: any;
 }
-declare const RRuleBuilder: ({ datePickerInitialDate, onChange, rruleOptions, rruleString, enableYearlyInterval, hideStart, hideEnd, theme, translation, }: RRuleBuilderProps) => React.JSX.Element;
+declare const RRuleBuilder: ({ datePickerInitialDate, onChange, rruleOptions, rruleString, dense, enableYearlyInterval, hideStart, hideEnd, translation, }: RRuleBuilderProps) => React.JSX.Element;
 export default RRuleBuilder;

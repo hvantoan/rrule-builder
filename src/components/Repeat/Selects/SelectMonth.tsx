@@ -13,10 +13,11 @@ interface SelectMonthProps {
   translation: any;
   onChange: (value: AllRepeatDetails) => void;
   disabled: boolean;
+  dense: boolean;
 }
 const sxMinWidth = { minWidth: 120 };
 
-const SelectMonth = ({ value, onChange, disabled, translation }: SelectMonthProps) => {
+const SelectMonth = ({ value, onChange, disabled, translation, dense }: SelectMonthProps) => {
   const displayValue = disabled ? null : value?.byMonth?.[0] ?? null;
 
   return (
@@ -26,6 +27,7 @@ const SelectMonth = ({ value, onChange, disabled, translation }: SelectMonthProp
       </InputLabel>
       <Select
         sx={sxMinWidth}
+        size={dense ? "small" : "medium"}
         disabled={disabled}
         onChange={(e) => onChange({ ...value, byMonth: [parseInt(e.target.value as string, 10)] })}
         value={displayValue}

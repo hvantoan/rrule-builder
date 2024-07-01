@@ -5,6 +5,7 @@ interface SelectDayWeekProps {
     translation: any;
     onChange: (value: AllRepeatDetails) => void;
     disabled: boolean;
+    dense: boolean;
 }
-declare const SelectDayWeek: ({ value, onChange, disabled, translation }: SelectDayWeekProps) => React.JSX.Element;
+declare const SelectDayWeek: ({ value, onChange, disabled, translation, dense }: SelectDayWeekProps) => React.JSX.Element;
 export default SelectDayWeek;

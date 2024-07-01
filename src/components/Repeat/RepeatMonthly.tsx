@@ -14,11 +14,12 @@ import { Col, Row, Stack } from "react-bootstrap";
 
 interface RepeatMonthlyProps {
   value: AllRepeatDetails;
+  dense: boolean;
   translation: any;
   onChange: (value: AllRepeatDetails) => void;
 }
 
-const RepeatMonthly = ({ value, onChange, translation }: RepeatMonthlyProps) => {
+const RepeatMonthly = ({ value, onChange, translation, dense }: RepeatMonthlyProps) => {
   const maxDaysInMonth = 31;
   const [onRadio, setOnRadio] = useState<MonthBy>(MonthBy.BYMONTHDAY);
   const disabledOnBYSETPOS = onRadio === MonthBy.BYMONTHDAY;
@@ -26,7 +27,7 @@ const RepeatMonthly = ({ value, onChange, translation }: RepeatMonthlyProps) => 
 
   return (
     <Stack gap={2}>
-      <IntervalTextInput translation={translation} value={value} onChange={onChange} unit="months" />
+      <IntervalTextInput dense={dense} translation={translation} value={value} onChange={onChange} unit="months" />
       <Row sm={12} md={12}>
         <RadioGroup
           name="monthly"
@@ -51,6 +52,7 @@ const RepeatMonthly = ({ value, onChange, translation }: RepeatMonthlyProps) => 
               </Col>
               <Col sm={12} md={4} className="pe-0">
                 <SelectDayCalendar
+                  dense={dense}
                   translation={translation}
                   value={value}
                   onChange={onChange}
@@ -74,6 +76,7 @@ const RepeatMonthly = ({ value, onChange, translation }: RepeatMonthlyProps) => 
               </Col>
               <Col sm={12} md={4} className="pe-0">
                 <SelectPosition
+                  dense={dense}
                   translation={translation}
                   value={value}
                   onChange={onChange}
@@ -82,6 +85,7 @@ const RepeatMonthly = ({ value, onChange, translation }: RepeatMonthlyProps) => 
               </Col>
               <Col sm={12} md={4}>
                 <SelectDayWeek
+                  dense={dense}
                   translation={translation}
                   value={value}
                   onChange={onChange}

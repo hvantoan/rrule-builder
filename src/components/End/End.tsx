@@ -1,5 +1,5 @@
 import React from "react";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
@@ -11,12 +11,14 @@ import { EndType } from "./End.types";
 import translateLabel from "../../utils/translateLabel";
 import vietnamese from "../../tranlations/vietnamese";
 import { Col, Row } from "react-bootstrap";
+import DatePic from "../DatePicker";
 
 interface EndProps {
   translation: any;
+  dense: boolean;
 }
 
-const End = ({ translation = vietnamese }: EndProps) => {
+const End = ({ translation = vietnamese, dense }: EndProps) => {
   const { startDate, endDetails, setEndDetails } = useBuilderStore();
   return (
     <Row className="col-12 px-0">
@@ -24,6 +26,7 @@ const End = ({ translation = vietnamese }: EndProps) => {
         <FormControl fullWidth>
           <InputLabel id="end-label">{translateLabel(translation, "end.label")}</InputLabel>
           <Select
+            size={dense ? "small" : "medium"}
             value={endDetails?.endingType}
             onChange={(e) => setEndDetails({ ...endDetails, endingType: e.target.value as EndType })}
             labelId="end-label"
@@ -39,8 +42,9 @@ const End = ({ translation = vietnamese }: EndProps) => {
       </Col>
       <Col sm={12} md={6} className="pe-0">
         {endDetails?.endingType === EndType.ON && (
-          <DatePicker
+          <DatePic
             sx={{ width: "100%" }}
+            formatDensity="dense"
             label={translateLabel(translation, "end.label")}
             value={endDetails?.endDate}
             // earliest possible end date is the start date
@@ -52,9 +56,10 @@ const End = ({ translation = vietnamese }: EndProps) => {
         {endDetails?.endingType === EndType.AFTER && (
           <FormControl fullWidth>
             <TextField
-              label={translateLabel(translation, "end.occurrences")}
               type="number"
+              size={dense ? "small" : "medium"}
               value={endDetails.occurrences ?? ""}
+              label={translateLabel(translation, "end.occurrences")}
               onChange={(e) => setEndDetails({ ...endDetails, occurrences: parseInt(e.target.value, 10) })}
             />
           </FormControl>

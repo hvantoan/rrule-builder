@@ -12,15 +12,24 @@ interface SelectDayCalendarProps {
   onChange: (value: AllRepeatDetails) => void;
   maxDaysInMonth: number;
   disabled: boolean;
+  dense: boolean;
 }
 const sxMinWidth = { minWidth: 120 };
 
-const SelectDayCalendar = ({ value, onChange, maxDaysInMonth, disabled, translation }: SelectDayCalendarProps) => (
+const SelectDayCalendar = ({
+  value,
+  onChange,
+  maxDaysInMonth,
+  disabled,
+  translation,
+  dense,
+}: SelectDayCalendarProps) => (
   <FormControl fullWidth>
     <InputLabel id="select-day-cal-label" disabled={disabled}>
       {translateLabel(translation, "repeat.selectDay")}
     </InputLabel>
     <Select
+      size={dense ? "small" : "medium"}
       sx={sxMinWidth}
       disabled={disabled}
       onChange={(e) => onChange({ ...value, byMonthDay: [parseInt(e.target.value as string, 10)] })}
