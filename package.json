@@ -1,12 +1,12 @@
 {
   "name": "rrule-builder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "author": "hvantoan <it.vantoan@gmail.com>",
   "description": "Recurrence Rule Builder with MUI suport Language Vietnamese",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hvantoan/recurrencerule-builder-ts.git"
+    "url": "https://github.com/hvantoan/rrule-builder.git"
   },
   "keywords": [
     "rrule-builder",
@@ -15,7 +15,7 @@
     "mui",
     "react-component"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",

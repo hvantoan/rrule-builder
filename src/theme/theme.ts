@@ -6,6 +6,13 @@ const defaultTheme = createTheme({
     },
   },
   components: {
+    MuiOutlinedInput: {
+      styleOverrides: {
+        input: {
+          padding: "8px", // Adjust padding as needed
+        },
+      },
+    },
     MuiInputLabel: {
       styleOverrides: {
         root: {
