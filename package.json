@@ -1,6 +1,6 @@
 {
   "name": "rrule-builder",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "private": false,
   "author": "hvantoan <it.vantoan@gmail.com>",
   "description": "Recurrence Rule Builder with MUI suport Language Vietnamese",

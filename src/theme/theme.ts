@@ -1,5 +1,4 @@
 import { createTheme } from "@mui/material/styles";
-import type {} from "@mui/x-date-pickers/themeAugmentation";
 const defaultTheme = createTheme({
   palette: {
     primary: {
@@ -7,15 +6,16 @@ const defaultTheme = createTheme({
     },
   },
   components: {
-    MuiInputBase: {
+    MuiInputLabel: {
       styleOverrides: {
         root: {
-          padding: "4px", // Adjust padding as needed
-          backgroundColor: "white",
+          "&.MuiInputLabel-shrink": {
+            transform: "translate(10px, -8px) scale(0.8)", // Custom transform when label has filled value
+          },
+          transform: "translate(10px, 10px) scale(1);",
         },
       },
     },
-    MuiDatePicker: {},
   },
 });
 
