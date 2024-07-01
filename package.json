@@ -28,8 +28,8 @@
     "build-storybook": "storybook build"
   },
   "peerDependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": ">=18.3.1",
+    "react-dom": ">=18.3.1"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -71,6 +71,6 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-typescript2": "^0.36.0",
     "storybook": "^8.1.11",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.2"
   }
 }

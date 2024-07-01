@@ -15,7 +15,7 @@ type IntervalTextInputProps = {
 
 const IntervalTextInput = ({ value, onChange, unit, translation }: IntervalTextInputProps) => (
   <Row className="d-flex justify-center align-items-center">
-    <Col sm="2" md="2" className="text-right">
+    <Col sm="2" md="2" className="text-left">
       <Typography>{translateLabel(translation, "repeat.every")}</Typography>
     </Col>
     <Col sm="2" md="4" className="pe-0">
