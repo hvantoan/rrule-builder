@@ -19,7 +19,7 @@ interface EndProps {
 const End = ({ translation = vietnamese }: EndProps) => {
   const { startDate, endDetails, setEndDetails } = useBuilderStore();
   return (
-    <Row>
+    <Row className="col-12 px-0">
       <Col xs={12} sm={12} md={6} className="px-0">
         <FormControl fullWidth>
           <InputLabel id="end-label">{translateLabel(translation, "end.label")}</InputLabel>

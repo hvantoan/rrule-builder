@@ -16,7 +16,7 @@ import forEach from 'lodash/forEach';
 import isFunction from 'lodash/isFunction';
 import isPlainObject from 'lodash/isPlainObject';
 import get from 'lodash/get';
-import { Row, Col, Stack } from 'react-bootstrap';
+import { Row, Col, Stack, Card } from 'react-bootstrap';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import Radio from '@mui/material/Radio';
@@ -378,7 +378,7 @@ const translateLabel = (translations, key, replacements = {}) => {
 };
 
 const IntervalTextInput = ({ value, onChange, unit, translation }) => (React.createElement(Row, { className: "d-flex justify-center align-items-center" },
-    React.createElement(Col, { sm: "2", md: "2", className: "text-right" },
+    React.createElement(Col, { sm: "2", md: "2", className: "text-left" },
         React.createElement(Typography, null, translateLabel(translation, "repeat.every"))),
     React.createElement(Col, { sm: "2", md: "4", className: "pe-0" },
         React.createElement(TextField, { fullWidth: true, id: "outlined-basic", label: "", variant: "outlined", type: "number", value: value.interval, onChange: (e) => onChange(Object.assign(Object.assign({}, baseRepeatDetails), { interval: parseInt(e.target.value, 10) })) })),
@@ -630,9 +630,10 @@ const RepeatSelect = ({ rruleFrequencyOptions = defaultFrequencyOptions, frequen
                 return null;
         }
     }, [enableYearlyInterval, frequencySelected, repeatDetails, setRepeatDetails]);
-    return (React.createElement(Stack$1, { direction: "column", spacing: 2 },
-        React.createElement(Select, { variant: "outlined", value: frequencySelected, onChange: (e) => onFrequencyChange(e.target.value), fullWidth: true }, menuItems),
-        repeatComponentToRender));
+    return (React.createElement(Card, { className: "p-3" },
+        React.createElement(Stack$1, { direction: "column", spacing: 2 },
+            React.createElement(Select, { variant: "outlined", value: frequencySelected, onChange: (e) => onFrequencyChange(e.target.value), fullWidth: true }, menuItems),
+            repeatComponentToRender)));
 };
 
 const vietnamese = {
@@ -733,7 +734,7 @@ const vietnamese = {
 const End = ({ translation = vietnamese }) => {
     var _a;
     const { startDate, endDetails, setEndDetails } = useBuilderStore();
-    return (React.createElement(Row, null,
+    return (React.createElement(Row, { className: "col-12 px-0" },
         React.createElement(Col, { xs: 12, sm: 12, md: 6, className: "px-0" },
             React.createElement(FormControl, { fullWidth: true },
                 React.createElement(InputLabel, { id: "end-label" }, translateLabel(translation, "end.label")),
@@ -757,28 +758,28 @@ const defaultTheme = createTheme({
         MuiInputBase: {
             styleOverrides: {
                 root: {
-                    padding: '4px', // Adjust padding as needed
-                    backgroundColor: 'white',
+                    padding: "4px", // Adjust padding as needed
+                    backgroundColor: "white",
                 },
             },
         },
         MuiOutlinedInput: {
             styleOverrides: {
                 input: {
-                    padding: '4px', // Adjust padding as needed
+                    padding: "4px", // Adjust padding as needed
                 },
             },
         },
         MuiInputLabel: {
             styleOverrides: {
                 root: {
-                    '&.Mui-focused': {
-                        transform: 'translate(10px, -10px) scale(0.8)', // Custom transform when label is focused or shrunk
+                    "&.Mui-focused": {
+                        transform: "translate(10px, -10px) scale(1)", // Custom transform when label is focused or shrunk
                     },
-                    '&.MuiInputLabel-shrink': {
-                        transform: 'translate(10px, -10px) scale(0.8)', // Custom transform when label has filled value
+                    "&.MuiInputLabel-shrink": {
+                        transform: "translate(10px, -10px) scale(1)", // Custom transform when label has filled value
                     },
-                    transform: 'translate(10px, 10px) scale(0.8);',
+                    transform: "translate(10px, 10px) scale(1);",
                 },
             },
         },
@@ -849,11 +850,12 @@ enableYearlyInterval = false, hideStart = false, hideEnd = false, theme, transla
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return (React.createElement(ThemeProvider, { theme: theme || defaultTheme },
-        React.createElement(Stack$1, { direction: "column", spacing: 2 },
-            React.createElement(LocalizationProvider, { dateAdapter: AdapterLuxon },
-                !hideStart && (React.createElement(DatePicker, { label: translateLabel(translation, "start.label"), value: startDate, format: "dd/MM/yyyy HH:mm", onChange: (newDate) => setStartDate(newDate) })),
-                React.createElement(RepeatSelect, { translation: translation, frequencySelected: frequency, onFrequencyChange: setFrequency, enableYearlyInterval: enableYearlyInterval }),
-                !hideEnd && React.createElement(End, { translation: translation })))));
+        React.createElement(Card, { className: "p-3" },
+            React.createElement(Stack$1, { direction: "column", spacing: 2 },
+                React.createElement(LocalizationProvider, { dateAdapter: AdapterLuxon },
+                    !hideStart && (React.createElement(DatePicker, { label: translateLabel(translation, "start.label"), value: startDate, format: "dd/MM/yyyy HH:mm", onChange: (newDate) => setStartDate(newDate) })),
+                    React.createElement(RepeatSelect, { translation: translation, frequencySelected: frequency, onFrequencyChange: setFrequency, enableYearlyInterval: enableYearlyInterval }),
+                    !hideEnd && React.createElement(End, { translation: translation }))))));
 };
 
 const english = {
@@ -957,4 +959,4 @@ var index = {
     vietnamese
 };
 
-export { RRuleBuilder, index as tranlations, useBuilderStore };
+export { RRuleBuilder, defaultTheme, index as tranlations, useBuilderStore };

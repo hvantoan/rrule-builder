@@ -399,7 +399,7 @@ const translateLabel = (translations, key, replacements = {}) => {
 };
 
 const IntervalTextInput = ({ value, onChange, unit, translation }) => (React.createElement(reactBootstrap.Row, { className: "d-flex justify-center align-items-center" },
-    React.createElement(reactBootstrap.Col, { sm: "2", md: "2", className: "text-right" },
+    React.createElement(reactBootstrap.Col, { sm: "2", md: "2", className: "text-left" },
         React.createElement(material.Typography, null, translateLabel(translation, "repeat.every"))),
     React.createElement(reactBootstrap.Col, { sm: "2", md: "4", className: "pe-0" },
         React.createElement(TextField, { fullWidth: true, id: "outlined-basic", label: "", variant: "outlined", type: "number", value: value.interval, onChange: (e) => onChange(Object.assign(Object.assign({}, baseRepeatDetails), { interval: parseInt(e.target.value, 10) })) })),
@@ -651,9 +651,10 @@ const RepeatSelect = ({ rruleFrequencyOptions = defaultFrequencyOptions, frequen
                 return null;
         }
     }, [enableYearlyInterval, frequencySelected, repeatDetails, setRepeatDetails]);
-    return (React.createElement(Stack, { direction: "column", spacing: 2 },
-        React.createElement(Select, { variant: "outlined", value: frequencySelected, onChange: (e) => onFrequencyChange(e.target.value), fullWidth: true }, menuItems),
-        repeatComponentToRender));
+    return (React.createElement(reactBootstrap.Card, { className: "p-3" },
+        React.createElement(Stack, { direction: "column", spacing: 2 },
+            React.createElement(Select, { variant: "outlined", value: frequencySelected, onChange: (e) => onFrequencyChange(e.target.value), fullWidth: true }, menuItems),
+            repeatComponentToRender)));
 };
 
 const vietnamese = {
@@ -754,7 +755,7 @@ const vietnamese = {
 const End = ({ translation = vietnamese }) => {
     var _a;
     const { startDate, endDetails, setEndDetails } = useBuilderStore();
-    return (React.createElement(reactBootstrap.Row, null,
+    return (React.createElement(reactBootstrap.Row, { className: "col-12 px-0" },
         React.createElement(reactBootstrap.Col, { xs: 12, sm: 12, md: 6, className: "px-0" },
             React.createElement(FormControl, { fullWidth: true },
                 React.createElement(InputLabel, { id: "end-label" }, translateLabel(translation, "end.label")),
@@ -778,28 +779,28 @@ const defaultTheme = styles.createTheme({
         MuiInputBase: {
             styleOverrides: {
                 root: {
-                    padding: '4px', // Adjust padding as needed
-                    backgroundColor: 'white',
+                    padding: "4px", // Adjust padding as needed
+                    backgroundColor: "white",
                 },
             },
         },
         MuiOutlinedInput: {
             styleOverrides: {
                 input: {
-                    padding: '4px', // Adjust padding as needed
+                    padding: "4px", // Adjust padding as needed
                 },
             },
         },
         MuiInputLabel: {
             styleOverrides: {
                 root: {
-                    '&.Mui-focused': {
-                        transform: 'translate(10px, -10px) scale(0.8)', // Custom transform when label is focused or shrunk
+                    "&.Mui-focused": {
+                        transform: "translate(10px, -10px) scale(1)", // Custom transform when label is focused or shrunk
                     },
-                    '&.MuiInputLabel-shrink': {
-                        transform: 'translate(10px, -10px) scale(0.8)', // Custom transform when label has filled value
+                    "&.MuiInputLabel-shrink": {
+                        transform: "translate(10px, -10px) scale(1)", // Custom transform when label has filled value
                     },
-                    transform: 'translate(10px, 10px) scale(0.8);',
+                    transform: "translate(10px, 10px) scale(1);",
                 },
             },
         },
@@ -870,11 +871,12 @@ enableYearlyInterval = false, hideStart = false, hideEnd = false, theme, transla
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return (React.createElement(react.ThemeProvider, { theme: theme || defaultTheme },
-        React.createElement(Stack, { direction: "column", spacing: 2 },
-            React.createElement(xDatePickers.LocalizationProvider, { dateAdapter: AdapterLuxon.AdapterLuxon },
-                !hideStart && (React.createElement(DatePicker.DatePicker, { label: translateLabel(translation, "start.label"), value: startDate, format: "dd/MM/yyyy HH:mm", onChange: (newDate) => setStartDate(newDate) })),
-                React.createElement(RepeatSelect, { translation: translation, frequencySelected: frequency, onFrequencyChange: setFrequency, enableYearlyInterval: enableYearlyInterval }),
-                !hideEnd && React.createElement(End, { translation: translation })))));
+        React.createElement(reactBootstrap.Card, { className: "p-3" },
+            React.createElement(Stack, { direction: "column", spacing: 2 },
+                React.createElement(xDatePickers.LocalizationProvider, { dateAdapter: AdapterLuxon.AdapterLuxon },
+                    !hideStart && (React.createElement(DatePicker.DatePicker, { label: translateLabel(translation, "start.label"), value: startDate, format: "dd/MM/yyyy HH:mm", onChange: (newDate) => setStartDate(newDate) })),
+                    React.createElement(RepeatSelect, { translation: translation, frequencySelected: frequency, onFrequencyChange: setFrequency, enableYearlyInterval: enableYearlyInterval }),
+                    !hideEnd && React.createElement(End, { translation: translation }))))));
 };
 
 const english = {
@@ -979,5 +981,6 @@ var index = {
 };
 
 exports.RRuleBuilder = RRuleBuilder;
+exports.defaultTheme = defaultTheme;
 exports.tranlations = index;
 exports.useBuilderStore = useBuilderStore;

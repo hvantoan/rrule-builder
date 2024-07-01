@@ -1,3 +1,4 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -10,7 +11,7 @@ import useBuilderStore from "../../store/builderStore";
 import End from "../End/End";
 import { Theme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
-import { defaultTheme } from "../../theme/theme";
+import defaultTheme from "../../theme/theme";
 import vietnamese from "../../tranlations/vietnamese";
 import translateLabel from "../../utils/translateLabel";
 import { Card } from "react-bootstrap";
@@ -116,8 +117,8 @@ const RRuleBuilder = ({
   }, []);
 
   return (
-    <Card className="p-2 border-1">
-      <ThemeProvider theme={theme || defaultTheme}>
+    <ThemeProvider theme={theme || defaultTheme}>
+      <Card className="p-3">
         <Stack direction="column" spacing={2}>
           <LocalizationProvider dateAdapter={AdapterLuxon}>
             {!hideStart && (
@@ -137,8 +138,8 @@ const RRuleBuilder = ({
             {!hideEnd && <End translation={translation} />}
           </LocalizationProvider>
         </Stack>
-      </ThemeProvider>
-    </Card>
+      </Card>
+    </ThemeProvider>
   );
 };
 

@@ -10,6 +10,7 @@ import RepeatDaily from "./RepeatDaily";
 import RepeatYearly from "./RepeatYearly";
 import useBuilderStore from "../../store/builderStore";
 import translateLabel from "../../utils/translateLabel";
+import { Card } from "react-bootstrap";
 
 interface RepeatSelectProps {
   rruleFrequencyOptions?: Frequency[];
@@ -90,17 +91,19 @@ const RepeatSelect = ({
   }, [enableYearlyInterval, frequencySelected, repeatDetails, setRepeatDetails]);
 
   return (
-    <Stack direction="column" spacing={2}>
-      <Select
-        variant={"outlined"}
-        value={frequencySelected}
-        onChange={(e) => onFrequencyChange(e.target.value as Frequency)}
-        fullWidth
-      >
-        {menuItems}
-      </Select>
-      {repeatComponentToRender}
-    </Stack>
+    <Card className="p-3">
+      <Stack direction="column" spacing={2}>
+        <Select
+          variant={"outlined"}
+          value={frequencySelected}
+          onChange={(e) => onFrequencyChange(e.target.value as Frequency)}
+          fullWidth
+        >
+          {menuItems}
+        </Select>
+        {repeatComponentToRender}
+      </Stack>
+    </Card>
   );
 };
 
