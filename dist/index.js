@@ -26,6 +26,7 @@ var RadioGroup = require('@mui/material/RadioGroup');
 var FormControlLabel = require('@mui/material/FormControlLabel');
 var InputLabel = require('@mui/material/InputLabel');
 var FormControl = require('@mui/material/FormControl');
+var react = require('@emotion/react');
 var styles = require('@mui/material/styles');
 
 function _interopNamespaceDefault(e) {
@@ -750,13 +751,6 @@ const vietnamese = {
     }
 };
 
-const DatePic = material.styled(xDatePickers.DatePicker)(({}) => ({
-    ".MuiOutlinedInput-input": {
-        padding: "8px",
-        backgroundColor: "white",
-    },
-}));
-
 const End = ({ translation = vietnamese, dense }) => {
     var _a;
     const { startDate, endDetails, setEndDetails } = useBuilderStore();
@@ -767,12 +761,31 @@ const End = ({ translation = vietnamese, dense }) => {
                 React.createElement(Select, { size: dense ? "small" : "medium", value: endDetails === null || endDetails === void 0 ? void 0 : endDetails.endingType, onChange: (e) => setEndDetails(Object.assign(Object.assign({}, endDetails), { endingType: e.target.value })), labelId: "end-label", label: "End" }, Object.entries(EndType).map(([key, value]) => (React.createElement(MenuItem, { key: key, value: value },
                     React.createElement(material.Typography, null, translateLabel(translation, "end." + value)))))))),
         React.createElement(reactBootstrap.Col, { sm: 12, md: 6, className: "pe-0" },
-            (endDetails === null || endDetails === void 0 ? void 0 : endDetails.endingType) === EndType.ON && (React.createElement(DatePic, { sx: { width: "100%" }, formatDensity: "dense", label: translateLabel(translation, "end.label"), value: endDetails === null || endDetails === void 0 ? void 0 : endDetails.endDate, 
+            (endDetails === null || endDetails === void 0 ? void 0 : endDetails.endingType) === EndType.ON && (React.createElement(xDatePickers.DatePicker, { sx: { width: "100%" }, formatDensity: "dense", label: translateLabel(translation, "end.label"), value: endDetails === null || endDetails === void 0 ? void 0 : endDetails.endDate, 
                 // earliest possible end date is the start date
                 minDate: startDate !== null && startDate !== void 0 ? startDate : undefined, disabled: !startDate, onChange: (newDate) => setEndDetails(Object.assign(Object.assign({}, endDetails), { endDate: newDate })) })),
             (endDetails === null || endDetails === void 0 ? void 0 : endDetails.endingType) === EndType.AFTER && (React.createElement(FormControl, { fullWidth: true },
                 React.createElement(TextField, { type: "number", size: dense ? "small" : "medium", value: (_a = endDetails.occurrences) !== null && _a !== void 0 ? _a : "", label: translateLabel(translation, "end.occurrences"), onChange: (e) => setEndDetails(Object.assign(Object.assign({}, endDetails), { occurrences: parseInt(e.target.value, 10) })) }))))));
 };
+
+const defaultTheme = styles.createTheme({
+    palette: {
+        primary: {
+            main: "#2781db",
+        },
+    },
+    components: {
+        MuiInputBase: {
+            styleOverrides: {
+                root: {
+                    padding: "4px", // Adjust padding as needed
+                    backgroundColor: "white",
+                },
+            },
+        },
+        MuiDatePicker: {},
+    },
+});
 
 const RRuleBuilder = ({ datePickerInitialDate, onChange, rruleOptions, rruleString, 
 // TODO implement small screen detection
@@ -836,12 +849,13 @@ dense = true, enableYearlyInterval = false, hideStart = false, hideEnd = false, 
         // this is intentional to only run on mount
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    return (React.createElement(reactBootstrap.Card, { className: "p-3" },
-        React.createElement(Stack, { direction: "column", spacing: 2 },
-            React.createElement(xDatePickers.LocalizationProvider, { dateAdapter: AdapterLuxon.AdapterLuxon },
-                !hideStart && (React.createElement(DatePic, { label: translateLabel(translation, "start.label"), value: startDate, format: "dd/MM/yyyy HH:mm", onChange: (newDate) => setStartDate(newDate) })),
-                React.createElement(RepeatSelect, { dense: dense, translation: translation, frequencySelected: frequency, onFrequencyChange: setFrequency, enableYearlyInterval: enableYearlyInterval }),
-                !hideEnd && React.createElement(End, { dense: dense, translation: translation })))));
+    return (React.createElement(react.ThemeProvider, { theme: defaultTheme },
+        React.createElement(reactBootstrap.Card, { className: "p-3" },
+            React.createElement(Stack, { direction: "column", spacing: 2 },
+                React.createElement(xDatePickers.LocalizationProvider, { dateAdapter: AdapterLuxon.AdapterLuxon },
+                    !hideStart && (React.createElement(xDatePickers.DatePicker, { label: translateLabel(translation, "start.label"), value: startDate, format: "dd/MM/yyyy HH:mm", onChange: (newDate) => setStartDate(newDate) })),
+                    React.createElement(RepeatSelect, { dense: dense, translation: translation, frequencySelected: frequency, onFrequencyChange: setFrequency, enableYearlyInterval: enableYearlyInterval }),
+                    !hideEnd && React.createElement(End, { dense: dense, translation: translation }))))));
 };
 
 const english = {
@@ -944,25 +958,6 @@ var index = {
     english,
     vietnamese
 };
-
-const defaultTheme = styles.createTheme({
-    palette: {
-        primary: {
-            main: "#2781db",
-        },
-    },
-    components: {
-        MuiInputBase: {
-            styleOverrides: {
-                root: {
-                    padding: "4px", // Adjust padding as needed
-                    backgroundColor: "white",
-                },
-            },
-        },
-        MuiDatePicker: {},
-    },
-});
 
 exports.RRuleBuilder = RRuleBuilder;
 exports.defaultTheme = defaultTheme;

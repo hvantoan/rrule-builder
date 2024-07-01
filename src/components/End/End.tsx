@@ -1,5 +1,4 @@
 import React from "react";
-// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
@@ -11,7 +10,7 @@ import { EndType } from "./End.types";
 import translateLabel from "../../utils/translateLabel";
 import vietnamese from "../../tranlations/vietnamese";
 import { Col, Row } from "react-bootstrap";
-import DatePic from "../DatePicker";
+import { DatePicker } from "@mui/x-date-pickers";
 
 interface EndProps {
   translation: any;
@@ -42,7 +41,7 @@ const End = ({ translation = vietnamese, dense }: EndProps) => {
       </Col>
       <Col sm={12} md={6} className="pe-0">
         {endDetails?.endingType === EndType.ON && (
-          <DatePic
+          <DatePicker
             sx={{ width: "100%" }}
             formatDensity="dense"
             label={translateLabel(translation, "end.label")}
