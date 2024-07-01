@@ -1,7 +1,7 @@
 // import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect } from "react";
 import Stack from "@mui/material/Stack";
-import { LocalizationProvider } from "@mui/x-date-pickers";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
 import { DateTime } from "luxon";
 import { Options } from "rrule";
@@ -14,7 +14,6 @@ import translateLabel from "../../utils/translateLabel";
 import { Card } from "react-bootstrap";
 import { ThemeProvider } from "@emotion/react";
 import defaultTheme from "../../theme/theme";
-import DatePic from "../DatePicker";
 
 interface RRuleBuilderProps {
   datePickerInitialDate?: DateTime;
@@ -121,7 +120,7 @@ const RRuleBuilder = ({
         <Stack direction="column" spacing={2}>
           <LocalizationProvider dateAdapter={AdapterLuxon}>
             {!hideStart && (
-              <DatePic
+              <DatePicker
                 label={translateLabel(translation, "start.label")}
                 value={startDate}
                 format="dd/MM/yyyy HH:mm"
