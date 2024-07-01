@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import Stack$1 from '@mui/material/Stack';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
@@ -24,6 +23,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material/styles';
 
 /******************************************************************************
@@ -753,6 +753,27 @@ const End = ({ translation = vietnamese, dense }) => {
                 React.createElement(TextField, { type: "number", size: dense ? "small" : "medium", value: (_a = endDetails.occurrences) !== null && _a !== void 0 ? _a : "", label: translateLabel(translation, "end.occurrences"), onChange: (e) => setEndDetails(Object.assign(Object.assign({}, endDetails), { occurrences: parseInt(e.target.value, 10) })) }))))));
 };
 
+const defaultTheme = createTheme({
+    palette: {
+        primary: {
+            main: "#2781db",
+        },
+    },
+    components: {
+        MuiInputLabel: {
+            styleOverrides: {
+                root: {
+                    "&.MuiInputLabel-shrink": {
+                        transform: "translate(10px, -8px) scale(0.8)", // Custom transform when label has filled value
+                    },
+                    transform: "translate(10px, 10px) scale(1);",
+                },
+            },
+        },
+    },
+});
+
+// import "bootstrap/dist/css/bootstrap.min.css";
 const RRuleBuilder = ({ datePickerInitialDate, onChange, rruleOptions, rruleString, 
 // TODO implement small screen detection
 // enableSmallScreenDetection = true,
@@ -815,12 +836,13 @@ dense = true, enableYearlyInterval = false, hideStart = false, hideEnd = false, 
         // this is intentional to only run on mount
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    return (React.createElement(Card, { className: "p-3" },
-        React.createElement(Stack$1, { direction: "column", spacing: 2 },
-            React.createElement(LocalizationProvider, { dateAdapter: AdapterLuxon },
-                !hideStart && (React.createElement(DatePic, { label: translateLabel(translation, "start.label"), value: startDate, format: "dd/MM/yyyy HH:mm", onChange: (newDate) => setStartDate(newDate) })),
-                React.createElement(RepeatSelect, { dense: dense, translation: translation, frequencySelected: frequency, onFrequencyChange: setFrequency, enableYearlyInterval: enableYearlyInterval }),
-                !hideEnd && React.createElement(End, { dense: dense, translation: translation })))));
+    return (React.createElement(ThemeProvider, { theme: defaultTheme },
+        React.createElement(Card, { className: "p-3" },
+            React.createElement(Stack$1, { direction: "column", spacing: 2 },
+                React.createElement(LocalizationProvider, { dateAdapter: AdapterLuxon },
+                    !hideStart && (React.createElement(DatePic, { label: translateLabel(translation, "start.label"), value: startDate, format: "dd/MM/yyyy HH:mm", onChange: (newDate) => setStartDate(newDate) })),
+                    React.createElement(RepeatSelect, { dense: dense, translation: translation, frequencySelected: frequency, onFrequencyChange: setFrequency, enableYearlyInterval: enableYearlyInterval }),
+                    !hideEnd && React.createElement(End, { dense: dense, translation: translation }))))));
 };
 
 const english = {
@@ -923,24 +945,5 @@ var index = {
     english,
     vietnamese
 };
-
-const defaultTheme = createTheme({
-    palette: {
-        primary: {
-            main: "#2781db",
-        },
-    },
-    components: {
-        MuiInputBase: {
-            styleOverrides: {
-                root: {
-                    padding: "4px", // Adjust padding as needed
-                    backgroundColor: "white",
-                },
-            },
-        },
-        MuiDatePicker: {},
-    },
-});
 
 export { RRuleBuilder, defaultTheme, index as tranlations, useBuilderStore };

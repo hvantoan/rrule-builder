@@ -1,4 +1,4 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -12,6 +12,8 @@ import { Theme } from "@mui/material";
 import vietnamese from "../../tranlations/vietnamese";
 import translateLabel from "../../utils/translateLabel";
 import { Card } from "react-bootstrap";
+import { ThemeProvider } from "@emotion/react";
+import defaultTheme from "../../theme/theme";
 import DatePic from "../DatePicker";
 
 interface RRuleBuilderProps {
@@ -114,29 +116,31 @@ const RRuleBuilder = ({
   }, []);
 
   return (
-    <Card className="p-3">
-      <Stack direction="column" spacing={2}>
-        <LocalizationProvider dateAdapter={AdapterLuxon}>
-          {!hideStart && (
-            <DatePic
-              label={translateLabel(translation, "start.label")}
-              value={startDate}
-              format="dd/MM/yyyy HH:mm"
-              onChange={(newDate) => setStartDate(newDate)}
-            />
-          )}
+    <ThemeProvider theme={defaultTheme}>
+      <Card className="p-3">
+        <Stack direction="column" spacing={2}>
+          <LocalizationProvider dateAdapter={AdapterLuxon}>
+            {!hideStart && (
+              <DatePic
+                label={translateLabel(translation, "start.label")}
+                value={startDate}
+                format="dd/MM/yyyy HH:mm"
+                onChange={(newDate) => setStartDate(newDate)}
+              />
+            )}
 
-          <RepeatSelect
-            dense={dense}
-            translation={translation}
-            frequencySelected={frequency}
-            onFrequencyChange={setFrequency}
-            enableYearlyInterval={enableYearlyInterval}
-          />
-          {!hideEnd && <End dense={dense} translation={translation} />}
-        </LocalizationProvider>
-      </Stack>
-    </Card>
+            <RepeatSelect
+              dense={dense}
+              translation={translation}
+              frequencySelected={frequency}
+              onFrequencyChange={setFrequency}
+              enableYearlyInterval={enableYearlyInterval}
+            />
+            {!hideEnd && <End dense={dense} translation={translation} />}
+          </LocalizationProvider>
+        </Stack>
+      </Card>
+    </ThemeProvider>
   );
 };
 
