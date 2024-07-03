@@ -1,4 +1,4 @@
-export const DATE_TIME_FORMAT = "YYYY-MM-DD HH:mm:ss";
+export const DATE_TIME_FORMAT = "YYYY-MM-DD HH:mm";
 
 export const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 export const DAYS = [

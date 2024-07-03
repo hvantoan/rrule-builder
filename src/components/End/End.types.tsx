@@ -8,6 +8,7 @@ export interface EndSettings {
 export type EndMode = "Never" | "After" | "On date";
 
 export interface EndOptions {
+  format?: string;
   modes: EndMode[];
   weekStartsOnSunday?: boolean; // Optional property
 }

@@ -11,7 +11,7 @@ const RepeatWeekly = ({ id, weekly: { interval, days, options }, handleChange, t
   }
 
   return (
-    <div className="px-3">
+    <div className="px-0 d-grid gap-2">
       <div className="form-group row d-flex align-items-sm-center">
         <div className="col-sm-1 offset-sm-2">{translateLabel(translations, "repeat.weekly.every")}</div>
         <div className="col-sm-3">
@@ -28,7 +28,8 @@ const RepeatWeekly = ({ id, weekly: { interval, days, options }, handleChange, t
       </div>
 
       <div className="form-group row">
-        <div className="btn-group btn-group-toggle offset-sm-2">
+        <div className="col-sm-2"></div>
+        <div className="col-sm-10 btn-group btn-group-toggle">
           {daysArray.map(([dayName, isDayActive]) => (
             <label
               htmlFor={`${id}-${dayName}`}
@@ -36,6 +37,7 @@ const RepeatWeekly = ({ id, weekly: { interval, days, options }, handleChange, t
               className={`btn btn-primary ${isDayActive ? "active" : ""}`}
             >
               <input
+                hidden
                 type="checkbox"
                 id={`${id}-${dayName}`}
                 name={`repeat.weekly.days[${dayName}]`}

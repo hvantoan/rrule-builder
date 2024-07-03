@@ -3,9 +3,9 @@ import moment from "moment";
 import DateTime from "react-datetime";
 import "moment/min/locales";
 
-import { DATE_TIME_FORMAT } from "../../constants/index";
 import translateLabel from "../../utils/translateLabel";
 import { EndOnDateProps } from "./OnDate.types";
+import { DATE_TIME_FORMAT } from "../../constants";
 
 const EndOnDate = ({ id, onDate: { date, options }, handleChange, translations }: EndOnDateProps) => {
   const CustomCalendar = options?.calendarComponent;
@@ -13,8 +13,8 @@ const EndOnDate = ({ id, onDate: { date, options }, handleChange, translations }
   const locale = options?.weekStartsOnSunday ? "en-ca" : "en-gb";
   const calendarAttributes = {
     "aria-label": translateLabel(translations, "end.tooltip"),
-    value: date,
-    dateFormat: DATE_TIME_FORMAT,
+    value: moment(date).format(options.format),
+    dateFormat: options.format,
     locale,
     readOnly: true,
   };

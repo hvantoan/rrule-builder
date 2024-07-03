@@ -12,8 +12,8 @@ const StartOnDate = ({ id, onDate: { date, options }, handleChange, translations
   const locale = options.weekStartsOnSunday ? "en-ca" : "en-gb";
   const calendarAttributes = {
     "aria-label": translateLabel(translations, "start.tooltip"),
-    value: date,
-    dateFormat: DATE_TIME_FORMAT,
+    value: moment(date).format(options.format),
+    dateFormat: options.format,
     locale,
     readOnly: true,
   };
@@ -48,7 +48,6 @@ const StartOnDate = ({ id, onDate: { date, options }, handleChange, translations
           initialViewMode="days"
           closeOnSelect
           closeOnClickOutside
-          dateFormat={options.format}
           onChange={(inputDate) => {
             const editedEvent = {
               target: {

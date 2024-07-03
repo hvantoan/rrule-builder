@@ -4,9 +4,10 @@ export interface EndOnDateProps {
   id: string;
   onDate: {
     date: string; // Assuming date is a JavaScript Date object
-    options?: {
+    options: {
       // Optional options object
       // Add specific properties and types for options if needed
+      format: string;
       weekStartsOnSunday?: boolean;
       calendarComponent?: React.ElementType;
     };

@@ -52,16 +52,16 @@ export default {
     label: "Lặp lại",
     yearly: {
       label: "Hàng năm",
-      on: "vào",
-      on_the: "vào ngày",
+      on: "Vào",
+      on_the: "Vào ngày",
       of: "của",
     },
     monthly: {
       label: "Hàng tháng",
       every: "Mỗi",
       months: "tháng",
-      on_day: "vào ngày",
-      on_the: "vào",
+      on_day: "Vào ngày",
+      on_the: "Vào",
     },
     weekly: {
       label: "Hàng tuần",

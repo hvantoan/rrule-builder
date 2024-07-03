@@ -17,7 +17,7 @@ const configureState = (config = {}, calendarComponent, id) => {
       onDate: {
         date: moment().format(DATE_TIME_FORMAT),
         options: {
-          format: config.format ?? "dd/MM/yyyy HH:mm",
+          format: config.formatStart ?? "dd/MM/yyyy HH:mm",
           weekStartsOnSunday: config.weekStartsOnSunday,
           calendarComponent,
         },
@@ -85,6 +85,7 @@ const configureState = (config = {}, calendarComponent, id) => {
       onDate: {
         date: moment().format(DATE_TIME_FORMAT),
         options: {
+          format: config.formatEnd,
           weekStartsOnSunday: config.weekStartsOnSunday,
           calendarComponent,
         },

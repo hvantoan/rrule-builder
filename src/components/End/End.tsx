@@ -10,7 +10,7 @@ export const End = ({ id, end, handleChange, translations }: EndProps) => {
   const isOptionSelected = (option: string) => end.mode === option;
   return (
     <div className="px-3">
-      <div className="form-group row">
+      <div className="form-group row pb-3">
         <div className="col-sm-2 text-sm-right">
           <label htmlFor={id} className="col-form-label">
             <strong>{translateLabel(translations, "end.label")}</strong>
